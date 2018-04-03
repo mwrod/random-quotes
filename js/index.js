@@ -1,24 +1,21 @@
-var colorsRYB = ["#FE2712", "#FC600A", "#66B032", "#0080FF", "#347C98", "#0247FE",
+const colorsRYB = ["#FE2712", "#FC600A", "#66B032", "#0080FF", "#347C98", "#0247FE",
  "#4424D6", "#8601AF", "#C21460", "#333333"];
+const quotes = [];
 var i = 0;
-var quotes = [];
 
-$.ajaxSetup({
-  cache: false,
-});
-
-function getNewQuote(id, success){
-  return $.getJSON("https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1",
-    function(quote){
+function fetchQuote(){
+  return fetch("https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1", {cache: "no-store"})
+    .then(res => res.json())
+    .then(quote => {
       quotes.push(quote[0]);
-      setQuote(id);
-  })
-  .done(function(){ if(success !== undefined) success(); })
-  .fail(function(){ //alert("Could not retrieve a new quote. Please check your internet connection.")
-});
+      setQuoteUI(i);
+    })
+    .catch(err => { 
+      if (err) alert("Could not retrieve a new quote. Please check your internet connection.") 
+    });
 }
 
-function setQuote(id){
+function setQuoteUI(id){
   $('#message').fadeOut(500, function(){
     $(this).html(quotes[id].content).fadeIn(500);
   });
@@ -33,42 +30,40 @@ function changeBackground(id){
   html.style.setProperty("--main-color", colorsRYB[quotes[id].ID % colorsRYB.length]);
 }
 
+function updateUI() {
+  if(i === 1) {
+    $("#leftArrow").css("visibility", "visible").hide().fadeIn("slow");
+  } else if(i === 0) {
+    $("#leftArrow").fadeOut("slow", function(){
+      $("#leftArrow").css({"visibility": "hidden", "display": "inline"});
+    });
+  }
+}
+
 $(document).ready(function(){
-  getNewQuote(i);
+  fetchQuote();
 
   $("#rightArrow").on("click", function(event){
-    function success(){
-      i++;
-      if(i === 1)
-        $("#leftArrow").css("visibility", "visible").hide().fadeIn("slow");
-    }
-
     if(event.detail == 1){
-      if(i >= quotes.length - 1){
-        getNewQuote(i + 1, success);
-      } else {
-        setQuote(i + 1);
-        success();
-      }
+      i++;
+      if(i >= quotes.length - 1) fetchQuote();
+      else setQuoteUI(i);
+      updateUI();
     }
   });
 
   $("#leftArrow").on("click", function(event){
     if(event.detail == 1){
-      if(i >= 1) i--;
-      setQuote(i);
-
-      if(i === 0) {
-        $("#leftArrow").fadeOut("slow", function(){
-          $("#leftArrow").css({"visibility": "hidden", "display": "inline"});
-        });
-      }
+      if(i > 0) i--;
+      setQuoteUI(i);
+      updateUI();
     }
   });
 
   $("#tweet-button").on("click", function(){
-    var message = $("#message").text();
-    var author = $("#author").text();
+    let message = $("#message").text();
+    let author = $("#author").text();
+
     if(message.length + author.length > 280) {
       postTitle = message.substr(0, 280 - author.length - 6) + "...";
     } else {
