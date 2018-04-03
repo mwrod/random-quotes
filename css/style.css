@@ -4,46 +4,14 @@ html {
 
 body {
   background-color: var(--main-color);
-  -webkit-transition: background 1s;
-  -moz-transition: background 1s;
-  -o-transition: background 1s;
-  -ms-transition: background 1s;
   transition: background 1s;
-}
-
-/* Footer */
-html, body {
-  height: 100%;
-} #wrapper{
-  min-height:100%;
-  position:relative;
-} footer {
-  width: 100%;
-  height: 42px;
-  position: absolute;
-  bottom: 0;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.45);
-  font-family: Lato, sans-serif;
-  font-size: 15px;
-} footer a {
-  line-height: 42px;
-  color: white;
-  text-decoration: none;
-} footer a:focus, a:hover, a:visited {
-  text-decoration: none;
-  color: white;
-} footer span {
-  vertical-align: middle;
-} .i-big {
-  vertical-align: middle;
-  font-size: 18px;
 }
 
 #main_content {
   color: var(--main-color);
   display: inline-block;
-  width: 35rem !important;
+  min-width: 225px;
+  max-width: 550px;
   margin-top: 10rem !important;
   margin-bottom: 10rem !important;
 }
@@ -52,34 +20,11 @@ html, body {
   color: var(--main-color);
 }
 
-.btn {
-  color: white;
-  background-color: var(--main-color);
-}
-
-.fa-twitter-square {
-  font-size: 2.5rem;
-  color: var(--main-color);
-  -webkit-filter: brightness(100%);
-}
-
-.fa-twitter-square:hover {
-  -webkit-filter: brightness(70%);
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  -ms-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
+/* Arrows */
 .arrow {
-  cursor: pointer;
   font-size: 2.5rem;
+  cursor: pointer;
   color: white;
-  -webkit-transition: background 1s;
-  -moz-transition: background 1s;
-  -o-transition: background 1s;
-  -ms-transition: background 1s;
   transition: background 1s;
 }
 
@@ -91,6 +36,61 @@ html, body {
   background-color: rgba(255, 255, 255, 0.25);
 }
 
+/* Twitter Button */
 #tweet-button {
   cursor: pointer;
+}
+
+.fa-twitter-square {
+  font-size: 2.5rem;
+  color: var(--main-color);
+  filter: brightness(100%);
+  -webkit-filter: brightness(100%);
+}
+
+.fa-twitter-square:hover {
+  transition: all 0.5s ease;
+  filter: brightness(70%);
+  -webkit-filter: brightness(70%);
+}
+
+/* Footer */
+html, body {
+  height: 100%;
+} 
+
+#wrapper {
+  min-height:100%;
+  position:relative;
+} 
+
+footer {
+  width: 100%;
+  height: 42px;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.45);
+  font-family: Lato, sans-serif;
+  font-size: 15px;
+} 
+
+footer a {
+  line-height: 42px;
+  color: white;
+  text-decoration: none;
+} 
+
+footer a:focus, a:hover, a:visited {
+  text-decoration: none;
+  color: white;
+} 
+
+footer span {
+  vertical-align: middle;
+} 
+
+.i-big {
+  vertical-align: middle;
+  font-size: 18px;
 }
